@@ -1,48 +1,72 @@
-"""RANDERCISE"""
+import kivy
+from kivy.app import App
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+import sqlite3
 
-#Get user input for difficulty selection
+con = sqlite3.connect('exercises.db')
 
-#From difficulty selected, select random exercises from each DB table
+cur = con.cursor()
 
-#Easy:
-#   sets
-#   roundTime
-#   restTime
-#   restTimeSets
-#   2 exercises from elements n to m of table upperBody
-#   2 exercises from elements n to m of table core_andAbs
-#   2 exercises from elements n to m of table lowerBody
+#cur.execute('''CREATE TABLE exercises (name text, difficulty text, muscles text)''')
 
-#Medium:
-#   sets
-#   roundTime
-#   restTime
-#   restTimeSets
-#   3 exercises from elements n to m of table upperBody
-#   3 exercises from elements n to m of table core_andAbs
-#   3 exercises from elements n to m of table lowerBody
+#cur.execute("INSERT INTO exercises ('name', 'difficulty', 'muscles')  VALUES "
+#            "('Push Up', 'Easy', 'Upper'),"
+#            "('Yoga Push Up', 'Easy', 'Upper'),"
+#            "('Downward Facing Dog Hold', 'Easy', 'Upper'),"
+#            "('Sit Up', 'Easy', 'Core'),"
+#            "('Mountain Climber', 'Easy', 'Core'),"
+#            "('Leg Raises', 'Easy', 'Core'),"
+#            "('Squat', 'Easy', 'Lower'),"
+#            "('Lunges', 'Easy', 'Lower'),"
+#            "('Hip Bridges', 'Easy', 'Lower'),"
+#            "('Diamond Push Up', 'Medium', 'Upper'),"
+#            "('Burpee Push Up', 'Medium', 'Upper'),"
+#            "('Downward Facing Dog Push Up', 'Medium', 'Upper'),"
+#            "('Crunches', 'Medium', 'Core'),"
+#            "('Planck', 'Medium', 'Core'),"
+#            "('Leg Raise Alternations', 'Medium', 'Core'),"
+#            "('Single Leg Forward Squat', 'Medium', 'Lower'),"
+#            "('Clockwork Lunges', 'Medium', 'Lower'),"
+#            "('Burpees', 'Medium', 'Lower'),"
+#            "('Pull Ups', 'Hard', 'Upper'),"
+#            "('Handstand Shoulder Press', 'Hard', 'Upper'),"
+#            "('Single Hand Push Ups', 'Hard', 'Upper'),"
+#            "('Bicycle Crunches', 'Hard', 'Core'),"
+#            "('Hanging Knee Raises', 'Hard', 'Core'),"
+#            "('Hanging Leg Raises', 'Hard','Core'),"
+#            "('Pistol Squats', 'Hard', 'Lower'),"
+#            "('Alternating Jump Squats', 'Hard', 'Lower'),"
+#            "('Hip Rotations', 'Hard', 'Lower')")
 
-#Hard:
-#   4 exercises from elements n to m of table upperBody
-#   4 exercises from elements n to m of table core_andAbs
-#   4 exercises from elements n to m of table lowerBody
 
-#Preview workout
-#   Sequence exercises with 1 from each table after another
-#   for total amount of exercises selected
-#
-#   Display exercise sequence along with roundNumber
-#    Display roundTime and restTime
-#
-#   Ex:
-#      Easy: upperBody,core_andAbs,lowerBody,upperBody,core_andAbs,lowerBody
-#      Rounds:3 of each
-#      Round Time: 30s and Rest Time:45s
-#      Rest Time between rounds
+con.commit()
+con.close()
 
-#Select Start to begin circuit
-#For each exercise, display:
-#       Name:
-#       Roundtime:
-#       Pause Button
-#       Stop  Button
+class MainWindow(Screen):
+    pass
+
+class SecondWindow(Screen):
+    pass
+
+class ThirdWindow(Screen):
+    pass
+
+class FourthWindow(Screen):
+    pass
+
+class FifthWindow(Screen):
+    pass
+
+class WindowManager(ScreenManager):
+    pass
+
+kv = Builder.load_file("my.kv")
+
+class MyMainApp(App):
+    def build(self):
+        return kv
+
+if __name__ == "__main__":
+    MyMainApp().run()

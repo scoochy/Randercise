@@ -1,0 +1,144 @@
+WindowManager:
+    MainWindow:
+    SecondWindow:
+    ThirdWindow:
+    FourthWindow:
+    FifthWindow:
+
+
+<MainWindow>:
+    name: "main"
+
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+
+        Label:
+            text: "Randercise!"
+            font_size: 100
+
+
+        Button:
+            id: EasyButton
+            text: "Easy"
+            font_size: 50
+            background_color: (0,1,0,1)
+            on_release:
+                app.root.current = "descriptions"
+                root.manager.transition.direction = "right"
+
+        Button:
+            id: MediumButton
+            text: "Medium"
+            background_color: (1,155/255,0,1)
+            font_size: 50
+            on_release:
+                app.root.current = "descriptions"
+                root.manager.transition.direction = "right"
+
+        Button:
+            id: HardButton
+            text: "Hard"
+            background_color: (1,0,0,1)
+            font_size: 50
+            font_name: 'Arial'
+            on_release:
+                app.root.current = "descriptions"
+                root.manager.transition.direction = "right"
+
+<SecondWindow>:
+    name: "descriptions"
+
+    GridLayout:
+
+        cols:1
+
+        Accordion:
+            orientation: 'vertical'
+            size: root.width, root.height
+
+
+            AccordionItem:
+                title: "Exercise 1"
+                Label:
+                    text: "Jumping Jacks"
+                    font_size: 32
+
+            AccordionItem:
+                title: "Exercise 2"
+                Label:
+                    text: "Squats"
+                    font_size: 32
+
+            AccordionItem:
+                title: "Exercise 3"
+                Label:
+                    text: "Push Ups"
+                    font_size: 32
+
+            AccordionItem:
+                title: "Exercise 4"
+                Label:
+                    text: "Press Ups"
+                    font_size: 32
+
+        Button:
+            id: Start
+            size_hint: 0.3,0.3
+            text: "Start"
+            font_size: 50
+            background_color: (0,1,0,1)
+            on_release:
+                app.root.current = "timer"
+                root.manager.transition.direction = "right"
+
+<ThirdWindow>:
+    name: "timer"
+
+    GridLayout:
+
+        cols:1
+
+        GridLayout:
+
+            cols:2
+
+            Label:
+                text: "Set No. "
+
+            Label:
+                text: "Exercise Name"
+
+        Label:
+            text: "Timer"
+
+        Label:
+            text: "Tips/Advice"
+
+        GridLayout:
+            cols: 2
+
+            Button:
+                text: "Pause ||"
+
+            Label:
+                text: "Up Next: "
+
+
+
+<FourthWindow>:
+    name: "gif"
+
+    GridLayout:
+
+        cols: 1
+
+        Label:
+            text: "GIF"
+
+<FifthWindow>:
+    name: "cooldown"
+
+
+
