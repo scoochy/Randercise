@@ -27,6 +27,7 @@ WindowManager:
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
+                root.level(self.text)
 
         Button:
             id: MediumButton
@@ -36,6 +37,8 @@ WindowManager:
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
+                root.level(self.text)
+
 
         Button:
             id: HardButton
@@ -46,6 +49,9 @@ WindowManager:
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
+                root.level(self.text)
+
+
 
 <SecondWindow>:
     name: "descriptions"

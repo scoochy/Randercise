@@ -4,6 +4,7 @@ from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import sqlite3
+from kivy.properties import ObjectProperty
 
 con = sqlite3.connect('exercises.db')
 
@@ -42,13 +43,22 @@ cur = con.cursor()
 
 
 con.commit()
-con.close()
+
 
 class MainWindow(Screen):
-    pass
+
+    def level(self, difficulty):
+        self.difficulty = difficulty
+        cur.execute("SELECT* FROM exercises WHERE difficulty = ?", (self.difficulty,))
+        self.exercises = cur.fetchall()
+        print(self.exercises)
+
+
+
 
 class SecondWindow(Screen):
-    pass
+   pass
+
 
 class ThirdWindow(Screen):
     pass
