@@ -68,7 +68,7 @@ WindowManager:
             AccordionItem:
                 title: "Exercise 1"
                 Label:
-                    text: "Jumping Jacks"
+                    text:  "{}".format(self.parent.parent.parent.parent.parent.parent.parent.exercise_list[0]) if (self.parent.parent.parent.parent.parent.parent.parent.list_length) > 0 else "Exercise 1"
                     font_size: 32
 
             AccordionItem:

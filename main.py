@@ -1,3 +1,5 @@
+import threading
+
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -5,6 +7,8 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import sqlite3
 from kivy.properties import ObjectProperty
+from kivy.clock import Clock
+from kivy.properties import ListProperty
 
 con = sqlite3.connect('exercises.db')
 
@@ -46,18 +50,37 @@ con.commit()
 
 
 class MainWindow(Screen):
+    exercises = []
+    exercise_names = []
+
 
     def level(self, difficulty):
         self.difficulty = difficulty
         cur.execute("SELECT* FROM exercises WHERE difficulty = ?", (self.difficulty,))
-        self.exercises = cur.fetchall()
-        print(self.exercises)
+        MainWindow.exercises = cur.fetchall()
+        for row in MainWindow.exercises:
+            MainWindow.exercise_names.append(row[0])
+
+
+
 
 
 
 
 class SecondWindow(Screen):
-   pass
+    exercise_list = []
+    exercise_list = MainWindow.exercise_names
+    list_length = 0
+
+
+    def my_callback(dt):
+        print(SecondWindow.exercise_list), dt
+        if len(SecondWindow.exercise_list) > 0:
+            SecondWindow.list_length += 1
+            print(SecondWindow.exercise_list[1])
+            return False
+
+    event = Clock.schedule_interval(my_callback, 1)
 
 
 class ThirdWindow(Screen):
