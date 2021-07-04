@@ -1,3 +1,4 @@
+#:import Factory kivy.factory.Factory
 WindowManager:
     MainWindow:
     SecondWindow:
@@ -5,9 +6,28 @@ WindowManager:
     FourthWindow:
     FifthWindow:
 
+<Play@Popup>:
+    auto_dismiss: False
+    title: ""
+    separator_height: 0
+    size_hint: None, None
+    size: 300, 200
+    GridLayout:
+        cols: 2
+        Button:
+            text: "Play"
+            on_press: Factory.ThirdWindow.play += 1
+            on_press: root.dismiss()
+        Button:
+            text: "Home"
+            on_press:
+                app.sm.current = "main"
+                Factory.manager.transition.direction = "left"
+
 
 <MainWindow>:
     name: "main"
+    id: main
 
     GridLayout:
         cols:1
@@ -22,34 +42,38 @@ WindowManager:
         Button:
             id: EasyButton
             text: "Easy"
+            variable: 5
             font_size: 50
             background_color: (0,1,0,1)
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
-                root.level(self.text)
+                root.level(self.text, self.variable)
 
         Button:
             id: MediumButton
             text: "Medium"
+            variable: 7
             background_color: (1,155/255,0,1)
             font_size: 50
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
-                root.level(self.text)
+                root.level(self.text, self.variable)
 
 
         Button:
             id: HardButton
             text: "Hard"
+            variable: 9
             background_color: (1,0,0,1)
             font_size: 50
             font_name: 'Arial'
             on_release:
                 app.root.current = "descriptions"
                 root.manager.transition.direction = "right"
-                root.level(self.text)
+                root.level(self.text, self.variable)
+
 
 
 
@@ -57,37 +81,8 @@ WindowManager:
     name: "descriptions"
 
     GridLayout:
-
+        id: grid
         cols:1
-
-        Accordion:
-            orientation: 'vertical'
-            size: root.width, root.height
-
-
-            AccordionItem:
-                title: "Exercise 1"
-                Label:
-                    text:  "{}".format(self.parent.parent.parent.parent.parent.parent.parent.exercise_list[0]) if (self.parent.parent.parent.parent.parent.parent.parent.list_length) > 0 else "Exercise 1"
-                    font_size: 32
-
-            AccordionItem:
-                title: "Exercise 2"
-                Label:
-                    text: "Squats"
-                    font_size: 32
-
-            AccordionItem:
-                title: "Exercise 3"
-                Label:
-                    text: "Push Ups"
-                    font_size: 32
-
-            AccordionItem:
-                title: "Exercise 4"
-                Label:
-                    text: "Press Ups"
-                    font_size: 32
 
         Button:
             id: Start
@@ -98,6 +93,8 @@ WindowManager:
             on_release:
                 app.root.current = "timer"
                 root.manager.transition.direction = "right"
+
+
 
 <ThirdWindow>:
     name: "timer"
@@ -110,14 +107,29 @@ WindowManager:
 
             cols:2
 
-            Label:
-                text: "Set No. "
+            GridLayout:
+                cols:2
+
+                Label:
+
+                    text: "Set Number:"
+                    font_size: 25
+
+                Label:
+                    id: set
+                    text: "1"
+                    font_size: 50
+
+
 
             Label:
-                text: "Exercise Name"
+                text: ""
+                id: exercise
 
         Label:
-            text: "Timer"
+            id: timer
+            text: "3"
+            font_size: 100
 
         Label:
             text: "Tips/Advice"
@@ -126,10 +138,22 @@ WindowManager:
             cols: 2
 
             Button:
+                id: pause
                 text: "Pause ||"
+                on_release: root.pause()
+                on_press: Factory.Play().open()
 
-            Label:
-                text: "Up Next: "
+
+            GridLayout:
+                cols:2
+
+                Label:
+                    text: "Up Next: "
+
+                Label:
+                    text: ""
+                    id: next
+
 
 
 
