@@ -101,22 +101,38 @@ WindowManager:
 
 <SecondWindow>:
     name: "descriptions"
+    ScrollView:
+        size_hint: (1, None)
+        size: (root.width, root.height)
+        do_scroll_y: True
+        do_scroll_x: False
 
-    GridLayout:
-        id: grid
-        cols:1
+        GridLayout:
+            spacing: 10
+            size_hint_y: 1.2
+            id: grid
+            cols:1
 
-        Button:
-            id: Start
-            size_hint: 0.3,0.3
-            text: "Start"
-            font_size: 50
-            background_color: (18/255,143/255,9/255,0.95)
-            background_normal: ''
-            on_release:
-                app.root.current = "timer"
-                root.manager.transition.direction = "right"
+            StartButton:
+                size_hint: (0.1, 0.1)
+                pos_hint: {'center_x': 0.5}
+                id: Start
+                text: "Start"
+                font_size: 50
+                on_release:
+                    app.root.current = "timer"
+                    root.manager.transition.direction = "right"
 
+<StartButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (18/255, 143/255, 9/255, 0.95)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
 
 
 <ThirdWindow>:
@@ -153,8 +169,11 @@ WindowManager:
             Label:
                 id: timer
                 font_size: 150
-            Label:
-                text: "Tips/Advice"
+            Image:
+                id: advice
+                source: ''
+
+
         GridLayout:
             cols: 2
 
@@ -185,7 +204,10 @@ WindowManager:
         id: GIF
         cols: 1
 
-   
+        Video:
+            source: 'GIFS/exercise.gif'
+            state: "play"
+            options: {'eos':'loop'}
 
 
 
