@@ -12,9 +12,11 @@ from kivy.lang import Builder
 from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
+from kivy.core.window import Window
+from kivy.uix.button import Button
 from kivy.uix.video import Video
 from kivy.uix.label import Label
-
+from kivy.uix.scrollview import ScrollView
 
 con = sqlite3.connect('exercises.db')
 
@@ -100,7 +102,7 @@ class Exercises(Accordion):
         root = Accordion(orientation='vertical')
 
         for x in range(len(MainWindow.exercise_names)):
-            item = AccordionItem(title='{}'.format(MainWindow.exercise_names[x]), size_hint_y = None, size_hint_x = 1)
+            item = AccordionItem(title='{}'.format(MainWindow.exercise_names[x]), background_normal = 'Images/darkblue.png')
             item.add_widget(Image(source = '{}'.format(MainWindow.exercise_tips[x])))
             root.add_widget(item)
 
@@ -113,6 +115,11 @@ class SecondWindow(Screen):
         if self.my_callback() == False:
             exerlist = Exercises.exercise_list(self)
             self.ids.grid.add_widget(exerlist)
+            self.ids.grid.add_widget(Button(text = 'Start', on_release = self.switchscreen, font_size = 40, background_color = (18/255, 143/255, 9/255, 0.95), size_hint_y = 0.2))
+
+
+    def switchscreen(self, *args):
+        self.manager.current = 'timer'
 
     def my_callback(dt):
         if len(MainWindow.exercise_names) > 0:
@@ -126,15 +133,15 @@ class ThirdWindow(Screen):
     timer = 3
     runningclock = 1
     restingclock = -1
-    worktime = 30
-    resttime = 30
+    worktime = 3
+    resttime = 3
 
     def on_enter(self, *args):
         if MainWindow.difficulty == "Medium":
-            self.resttime = 20
+            self.resttime = 2
         if MainWindow.difficulty == "Hard":
-            self.worktime = 45
-            self.resttime = 15
+            self.worktime = 4
+            self.resttime = 1
         self.ids.timer.text = str(self.timer)
         self.function_interval = Clock.schedule_interval(self.first_countdown, 1)
         self.ids.exercise.text = MainWindow.exercise_names[(self.setnumber)]
@@ -259,6 +266,7 @@ class MyMainApp(App):
     sm = WindowManager()
 
     def build(self):
+        Window.clearcolor = (1,1,1,1)
         return kv
 
 if __name__ == "__main__":

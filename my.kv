@@ -3,6 +3,7 @@
 #:import Image kivy.core.image
 #:import Video kivy.uix.video
 #:import Video kivy.core.video
+#:import ScrollView kivy.uix.scrollview
 
 WindowManager:
     MainWindow:
@@ -11,9 +12,6 @@ WindowManager:
     FourthWindow:
     FifthWindow:
 
-
-
-
 <MainWindow>:
     name: "main"
     id: main
@@ -21,19 +19,15 @@ WindowManager:
     GridLayout:
         cols:1
         size: root.width, root.height
-        size_hint: (0.5, 1)
+        size_hint: (0.7, 1)
         pos_hint: {'center_x': 0.5}
         padding: 50
         spacing: 20
 
         Label:
-            text: "Randercise!"
+            text: "Яand0!"
             font_size: 100
             color: (2/255,11/255,69/255, 0.95)
-
-        Image:
-            source: 'Images/dumbbell.jfif'
-
 
         EasyButton:
             id: EasyButton
@@ -102,26 +96,18 @@ WindowManager:
 <SecondWindow>:
     name: "descriptions"
     ScrollView:
-        size_hint: (1, None)
+        id: scroll
+        effect_cls: 'ScrollEffect'
         size: (root.width, root.height)
         do_scroll_y: True
         do_scroll_x: False
 
         GridLayout:
             spacing: 10
-            size_hint_y: 1.2
+            size_hint_y: 1.3
+            size_hint_x: 1
             id: grid
             cols:1
-
-            StartButton:
-                size_hint: (0.1, 0.1)
-                pos_hint: {'center_x': 0.5}
-                id: Start
-                text: "Start"
-                font_size: 50
-                on_release:
-                    app.root.current = "timer"
-                    root.manager.transition.direction = "right"
 
 <StartButton@Button>
     background_color: (0,0,0,0)
@@ -139,61 +125,70 @@ WindowManager:
     name: "timer"
 
     GridLayout:
-
         cols:1
-
         GridLayout:
-
+            size_hint_y: 0.2
             cols:2
-
             GridLayout:
                 cols:2
-
                 Label:
-
                     text: "Set Number:"
-                    font_size: 25
-
+                    font_size: 35
+                    color: 0, 0, 0, 1
                 Label:
+                    size_hint_x: 0.5
                     id: set
                     text: "1"
-                    font_size: 50
-
-
-
+                    font_size: 35
+                    color: 0, 0, 0, 1
             Label:
                 text: ""
+                color: 0, 0, 0, 1
                 id: exercise
+                font_size: 30
+
         GridLayout:
             cols: 2
             Label:
                 id: timer
                 font_size: 150
+                color: 0, 0, 0, 1
             Image:
                 id: advice
                 source: ''
-
-
         GridLayout:
+            size_hint_y: 0.2
             cols: 2
-
-            Button:
+            PauseButton:
+                size_hint_x:0.5
+                color: 0, 0, 0, 1
                 id: pause
                 text: "Pause ||"
+                font_size: 30
                 on_release: root.pause_play()
-
-
-
             GridLayout:
                 cols:2
-
                 Label:
-                    text: "Up Next: "
-
+                    size_hint_x: 0.4
+                    text: "  Up Next: "
+                    color: 0, 0, 0, 1
+                    font_size: 30
                 Label:
                     text: ""
+                    color: 0, 0, 0, 1
                     id: next
+                    font_size: 30
 
+<PauseButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (240/255, 240/255, 0/255, 0.95)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
 
 
 
@@ -206,8 +201,6 @@ WindowManager:
 
         Video:
             source: 'GIFS/exercise.gif'
-            state: "play"
-            options: {'eos':'loop'}
 
 
 
@@ -216,11 +209,17 @@ WindowManager:
     name: "cooldown"
 
     GridLayout:
-
         cols: 1
 
-        Label:
-            text: "Cooooooldown"
-
+        Button:
+            size_hint_y: 0.2
+            background_color: (1,1,1,1)
+            text: 'Home'
+            font_size: 30
+            font_color: (0, 0, 0, 1)
+            on_release: app.root.current = "main"
+            on_release: root.manager.transition.direction = "left"
+        VideoPlayer:
+            source: 'Images/cooldown.mp4'
 
 
