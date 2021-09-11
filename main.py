@@ -1,5 +1,5 @@
 import os
-
+import sys
 os.environ['KIVY_VIDEO'] = 'ffpyplayer'
 import kivy
 
@@ -113,13 +113,8 @@ class SecondWindow(Screen):
 
     def on_enter(self, *args):
         if self.my_callback() == False:
-            exerlist = Exercises.exercise_list(self)
-            self.ids.grid.add_widget(exerlist)
-            self.ids.grid.add_widget(Button(text = 'Start', on_release = self.switchscreen, font_size = 40, background_color = (18/255, 143/255, 9/255, 0.95), size_hint_y = 0.2))
-
-
-    def switchscreen(self, *args):
-        self.manager.current = 'timer'
+            self.exerlist = Exercises.exercise_list(self)
+            self.ids.grid.add_widget(self.exerlist)
 
     def my_callback(dt):
         if len(MainWindow.exercise_names) > 0:
@@ -133,15 +128,15 @@ class ThirdWindow(Screen):
     timer = 3
     runningclock = 1
     restingclock = -1
-    worktime = 3
-    resttime = 3
+    worktime = 30
+    resttime = 30
 
     def on_enter(self, *args):
         if MainWindow.difficulty == "Medium":
-            self.resttime = 2
+            self.resttime = 20
         if MainWindow.difficulty == "Hard":
-            self.worktime = 4
-            self.resttime = 1
+            self.worktime = 45
+            self.resttime = 15
         self.ids.timer.text = str(self.timer)
         self.function_interval = Clock.schedule_interval(self.first_countdown, 1)
         self.ids.exercise.text = MainWindow.exercise_names[(self.setnumber)]
@@ -170,7 +165,6 @@ class ThirdWindow(Screen):
             self.ids.set.text = str(self.setnumber)
             self.ids.exercise.text = MainWindow.exercise_names[(self.setnumber - 1)]
             self.ids.advice.source = MainWindow.exercise_tips[(self.setnumber - 1)]
-            print(self.setnumber)
 
     def countdown(self, *args):
         self.runningclock = 1
@@ -261,13 +255,13 @@ class WindowManager(ScreenManager):
 
 kv = Builder.load_file("my.kv")
 
-
 class MyMainApp(App):
     sm = WindowManager()
 
     def build(self):
-        Window.clearcolor = (1,1,1,1)
+        Window.clearcolor = (1, 1, 1, 1)
         return kv
 
 if __name__ == "__main__":
     MyMainApp().run()
+
